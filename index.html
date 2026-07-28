@@ -29,56 +29,64 @@
       flex-direction: column;
       border: 1px solid #334155;
     }
-    /* キャラコロ凡例用スタイル */
+
+    /* --- 凡例スタイル（表示不具合対策・強化版） --- */
     .legend-container {
-      background-color: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 8px;
-      padding: 16px;
-      margin: 16px 0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px;
+      margin: 12px 0;
     }
     .legend-title {
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
-      border-bottom: 2px solid #007bff;
+      margin-bottom: 8px;
+      color: #38bdf8;
+      border-bottom: 2px solid #0284c7;
       padding-bottom: 4px;
       display: inline-block;
     }
     .legend-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr); /* 3列固定で安定化 */
+      gap: 6px;
       list-style: none;
       padding: 0;
       margin: 0;
     }
     .legend-item {
-      background: #ffffff;
-      padding: 8px 12px;
+      background: #334155;
+      padding: 6px 8px;
       border-radius: 6px;
-      border: 1px solid #dee2e6;
-      font-size: 0.95rem;
-      font-weight: 500;
+      border: 1px solid #475569;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #ffffff !important; /* 強制的に白文字に設定 */
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
     }
     .legend-number {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-      background-color: #007bff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: #0284c7;
       color: #ffffff;
       border-radius: 50%;
-      text-align: center;
-      font-size: 0.85rem;
-      margin-right: 8px;
+      font-size: 0.75rem;
+      margin-right: 6px;
       flex-shrink: 0;
     }
-    
+    .legend-text {
+      color: #ffffff !important;
+      white-space: nowrap;
+    }
+    /* ------------------------------------------- */
+
     /* ヘッダー・タイトル */
     .app-header {
       text-align: center;
@@ -324,16 +332,16 @@
       </div>
     </div>
 
-    <!-- キャラコロ凡例エリア追加箇所 -->
+    <!-- キャラコロ凡例エリア（構造を微調整） -->
     <section class="legend-container">
       <div class="legend-title">キャラコロ姿勢</div>
       <ul class="legend-grid">
-        <li class="legend-item"><span class="legend-number">①</span>直立</li>
-        <li class="legend-item"><span class="legend-number">②</span>仰向け</li>
-        <li class="legend-item"><span class="legend-number">③</span>右倒れ</li>
-        <li class="legend-item"><span class="legend-number">④</span>左倒れ</li>
-        <li class="legend-item"><span class="legend-number">⑤</span>うつ伏せ</li>
-        <li class="legend-item"><span class="legend-number">⑥</span>逆立ち</li>
+        <li class="legend-item"><span class="legend-number">1</span><span class="legend-text">直立</span></li>
+        <li class="legend-item"><span class="legend-number">2</span><span class="legend-text">仰向け</span></li>
+        <li class="legend-item"><span class="legend-number">3</span><span class="legend-text">右倒れ</span></li>
+        <li class="legend-item"><span class="legend-number">4</span><span class="legend-text">左倒れ</span></li>
+        <li class="legend-item"><span class="legend-number">5</span><span class="legend-text">うつ伏せ</span></li>
+        <li class="legend-item"><span class="legend-number">6</span><span class="legend-text">逆立ち</span></li>
       </ul>
     </section>
 
@@ -376,7 +384,7 @@
 </div>
 
 <script>
-// データベース（クォーテーションをすべて半角修正）
+// データベース
 const database = [
   {
     id: "pikachu",
@@ -411,14 +419,12 @@ const database = [
 let currentHp = 120;
 let currentEnekoro = 3;
 let selectedPokemon = database[0];
-let selectedMoves = database[0].moves.slice(0, 4); // 初期は最初の4ワザ
+let selectedMoves = database[0].moves.slice(0, 4);
 let activeMove = null;
 
-// セッティング画面の一時保持用
 let tempPokemon = selectedPokemon;
 let tempSelectedMoves = [...selectedMoves];
 
-// 初期化
 window.addEventListener('DOMContentLoaded', () => {
   renderMainScreen();
   initSettingScreen();
@@ -428,7 +434,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 画面切り替え
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
@@ -440,19 +445,16 @@ function showScreen(screenId) {
   }
 }
 
-// HP変更 (120~0)
 function changeHP(amount) {
   currentHp = Math.min(120, Math.max(0, currentHp + amount));
   document.getElementById('hpDisplay').innerText = currentHp;
 }
 
-// エネコロ変更 (0以上)
 function changeEnekoro(amount) {
   currentEnekoro = Math.max(0, currentEnekoro + amount);
   document.getElementById('enekoroDisplay').innerText = currentEnekoro + 'コ';
 }
 
-// リセット
 function resetStatus() {
   currentHp = 120;
   currentEnekoro = 3;
@@ -462,14 +464,12 @@ function resetStatus() {
   renderActiveMove();
 }
 
-// 使うワザカードを選択
 function selectActiveMove(move) {
   activeMove = move;
   renderActiveMove();
   renderMainMovesGrid();
 }
 
-// 使うワザ描画
 function renderActiveMove() {
   const box = document.getElementById('activeMoveBox');
   if (!activeMove) {
@@ -488,7 +488,6 @@ function renderActiveMove() {
   `;
 }
 
-// メイン画面描画
 function renderMainScreen() {
   document.getElementById('mainPokeName').innerText = selectedPokemon.name;
   document.getElementById('mainPokeWeak').innerText = selectedPokemon.weakness;
@@ -515,7 +514,6 @@ function renderMainMovesGrid() {
   });
 }
 
-// セッティング画面初期化
 function initSettingScreen() {
   const select = document.getElementById('pokemonSelect');
   select.innerHTML = '';
@@ -530,7 +528,7 @@ function initSettingScreen() {
 function onPokemonSelectChange() {
   const id = document.getElementById('pokemonSelect').value;
   tempPokemon = database.find(p => p.id === id);
-  tempSelectedMoves = tempPokemon.moves.slice(0, 4); // デフォルト4つ
+  tempSelectedMoves = tempPokemon.moves.slice(0, 4);
   renderSettingLists();
 }
 
@@ -542,7 +540,6 @@ function renderSettingLists() {
   availList.innerHTML = '';
   selList.innerHTML = '';
 
-  // 使えるワザ一覧
   tempPokemon.moves.forEach(move => {
     const isAlreadySelected = tempSelectedMoves.some(m => m.name === move.name);
     const item = document.createElement('div');
@@ -561,7 +558,6 @@ function renderSettingLists() {
     availList.appendChild(item);
   });
 
-  // 選択済みワザ（4つ）
   tempSelectedMoves.forEach((move, idx) => {
     const item = document.createElement('div');
     item.className = 'item-card';
@@ -578,7 +574,6 @@ function renderSettingLists() {
   });
 }
 
-// セッティング反映してメイン画面へ
 function applySettingsAndReturn() {
   if (tempSelectedMoves.length !== 4) {
     alert('ワザは必ず4つ選択してください。（現在 ' + tempSelectedMoves.length + ' 個選択されています）');

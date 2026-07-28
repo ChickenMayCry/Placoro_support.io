@@ -69,5 +69,19 @@ const database = [
         { name: "ハイドロアンガー", power: 40, energy: "水水水水", effect: "①②⑤このポケモンの残りHPが40以下なら、60ダメージ追加。" },
         { name: "マッドショット", power: 30, energy: "闘無無無", effect: "①③④30ダメージ追加。" }
       ]
+    },
+    {
+      id: "eievui",
+      name: "イーブイ",
+      weakness: "闘",
+      moves: [
+        { name: "しっぽではたく", power: 10, energy: "飛", effect: "①③④10ダメージ追加。" },
+        { name: "たいあたり", power: 10, energy: "飛飛", effect: "①②③④20ダメージ追加。" },
+        { name: "とっしん", power: 30, energy: "飛飛", effect: "①②20ダメージ追加。\n⑤⑥このポケモンにも20ダメージ。" },
+        { name: "はねまわる", power: 0, energy: "飛飛飛", effect: "①70ダメージを与える。\n②⑤40ダメージを与える。\n③④⑥20ダメージを与える。" },
+        { name: "ぜんりょくダッシュ", power: 40, energy: "無無無無無", effect: "①②⑤40ダメージ追加。" },
+        { name: "あまえる", power: 20, energy: "悪", effect: "①②③④次の相手の番、相手のエネコロを2個少なくする。" },
+        { name: "かみつく", power: 10, energy: "悪無無", effect: "①③④20ダメージ追加。" }
+      ]
     }
   ];

@@ -3,7 +3,7 @@ const database = [
     {
       id: "pikachu",
       name: "ピカチュウ",
-      weakness: "地面",
+      weakness: "闘",
       moves: [
         { name: "かじる", power: 10, energy: "電", effect: "①②30ダメージ追加。" },
         { name: "でんきショック", power: 10, energy: "電電", effect: "①③④⑥20ダメージ追加。" },

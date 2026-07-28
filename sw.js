@@ -1,7 +1,8 @@
-const CACHE_NAME = 'purakoro-pwa-v1';
+const CACHE_NAME = 'purakoro-pwa-v2';
 const ASSETS = [
   './',
   './index.html',
+  './database.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'

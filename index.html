@@ -29,6 +29,55 @@
       flex-direction: column;
       border: 1px solid #334155;
     }
+    /* キャラコロ凡例用スタイル */
+    .legend-container {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .legend-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 4px;
+      display: inline-block;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .legend-item {
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #dee2e6;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+    .legend-number {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      background-color: #007bff;
+      color: #ffffff;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 0.85rem;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
     
     /* ヘッダー・タイトル */
     .app-header {
@@ -233,7 +282,18 @@
       <div>使用ポケモン : <span id="mainPokeName" class="poke-name">ピカチュウ</span></div>
       <div class="poke-weakness">弱点 : <span id="mainPokeWeak">地面</span></div>
     </div>
-
+    <!-- キャラコロ凡例エリア追加箇所 -->
+    <section class="legend-container">
+      <div class="legend-title">キャラコロ姿勢</div>
+      <ul class="legend-grid">
+        <li class="legend-item"><span class="legend-number">①</span>直立</li>
+        <li class="legend-item"><span class="legend-number">②</span>仰向け</li>
+        <li class="legend-item"><span class="legend-number">③</span>右倒れ</li>
+        <li class="legend-item"><span class="legend-number">④</span>左倒れ</li>
+        <li class="legend-item"><span class="legend-number">⑤</span>うつ伏せ</li>
+        <li class="legend-item"><span class="legend-number">⑥</span>逆立ち</li>
+      </ul>
+    </section>
     <!-- HP管理 -->
     <div class="status-panel">
       <div class="status-label-val">

@@ -282,18 +282,6 @@
       <div>使用ポケモン : <span id="mainPokeName" class="poke-name">ピカチュウ</span></div>
       <div class="poke-weakness">弱点 : <span id="mainPokeWeak">地面</span></div>
     </div>
-    <!-- キャラコロ凡例エリア追加箇所 -->
-    <section class="legend-container">
-      <div class="legend-title">キャラコロ姿勢</div>
-      <ul class="legend-grid">
-        <li class="legend-item"><span class="legend-number">①</span>直立</li>
-        <li class="legend-item"><span class="legend-number">②</span>仰向け</li>
-        <li class="legend-item"><span class="legend-number">③</span>右倒れ</li>
-        <li class="legend-item"><span class="legend-number">④</span>左倒れ</li>
-        <li class="legend-item"><span class="legend-number">⑤</span>うつ伏せ</li>
-        <li class="legend-item"><span class="legend-number">⑥</span>逆立ち</li>
-      </ul>
-    </section>
     <!-- HP管理 -->
     <div class="status-panel">
       <div class="status-label-val">
@@ -336,6 +324,20 @@
       </div>
     </div>
 
+    <!-- キャラコロ凡例エリア追加箇所 -->
+    <section class="legend-container">
+      <div class="legend-title">キャラコロ姿勢</div>
+      <ul class="legend-grid">
+        <li class="legend-item"><span class="legend-number">①</span>"直立"</li>
+        <li class="legend-item"><span class="legend-number">②</span>"仰向け"</li>
+        <li class="legend-item"><span class="legend-number">③</span>"右倒れ"</li>
+        <li class="legend-item"><span class="legend-number">④</span>"左倒れ"</li>
+        <li class="legend-item"><span class="legend-number">⑤</span>"うつ伏せ"</li>
+        <li class="legend-item"><span class="legend-number">⑥</span>"逆立ち"</li>
+      </ul>
+    </section>
+
+    
     <!-- 操作ボタン -->
     <div class="bottom-actions">
       <button class="btn-action btn-reset" onclick="resetStatus()">リセット</button>
@@ -382,65 +384,26 @@ const database = [
     name: "ピカチュウ",
     weakness: "地面",
     moves: [
-      { name: "かじる", power: 10, energy: 電, effect: "30ダメージ追加。" },
-      { name: "でんきショック", power: 10, energy: 電電, effect: "20ダメージ追加。" },
-      { name: "エレキラッシュ", power: 20, energy: 電電, effect: "このワザは弱点を計算しない。\nもう一回「エレキラッシュ」使う。（失敗するまで繰り返せる。）" },
-      { name: "10まんボルト", power: 30, energy: 電電電, effect: "30ダメージ追加。\n次の自分の番、自分のエネコロを2個少なくする。" },
-      { name: "かみなり", power: 20, energy: 電電電, effect: "60ダメージ追加。" },
-      { name: "ボルテッカー", power: 40, energy: 電電電電, effect: "このポケモンにも30ダメージ。\n40ダメージ追加。" },
-      { name: "アイアンテール", power: 20, energy: 鋼, effect: "次の相手の番、このポケモンが受けるダメージを-10する。" }
+      { name: "かじる", power: 10, energy: "電", effect: "30ダメージ追加。" },
+      { name: "でんきショック", power: 10, energy: "電電", effect: "20ダメージ追加。" },
+      { name: "エレキラッシュ", power: 20, energy: "電電", effect: "このワザは弱点を計算しない。\nもう一回「エレキラッシュ」使う。（失敗するまで繰り返せる。）" },
+      { name: "10まんボルト", power: 30, energy: "電電電", effect: "30ダメージ追加。\n次の自分の番、自分のエネコロを2個少なくする。" },
+      { name: "かみなり", power: 20, energy: "電電電", effect: "60ダメージ追加。" },
+      { name: "ボルテッカー", power: 40, energy: "電電電電", effect: "このポケモンにも30ダメージ。\n40ダメージ追加。" },
+      { name: "アイアンテール", power: 20, energy: "鋼", effect: "次の相手の番、このポケモンが受けるダメージを-10する。" }
     ]
   },
   {
-    id: "charizard",
-    name: "リザードン",
-    weakness: "水",
-    moves: [
-      { name: "ひのこ", power: 20, energy: 1, effect: "なし" },
-      { name: "かえんほうしゃ", power: 60, energy: 3, effect: "相手を「やけど」にする" },
-      { name: "ほのおのパンチ", power: 40, energy: 2, effect: "なし" },
-      { name: "きりさく", power: 30, energy: 2, effect: "急所にあたりやすい" },
-      { name: "フレアドライブ", power: 90, energy: 4, effect: "自分にも30ダメージ" },
-      { name: "りゅうのいかり", power: 40, energy: 2, effect: "固定40ダメージ" }
-    ]
-  },
-  {
-    id: "blastoise",
-    name: "カメックス",
-    weakness: "雷",
-    moves: [
-      { name: "みずでっぽう", power: 20, energy: 1, effect: "なし" },
-      { name: "ハイドロポンプ", power: 70, energy: 4, effect: "なし" },
-      { name: "ロケットずつき", power: 50, energy: 3, effect: "次のターン防御+20" },
-      { name: "みずの波動", power: 30, energy: 2, effect: "相手を「こんらん」にする" },
-      { name: "たきのぼり", power: 40, energy: 2, effect: "なし" },
-      { name: "かみつく", power: 20, energy: 1, effect: "コイン表なら相手ひるみ" }
-    ]
-  },
-  {
-    id: "bulbasaur",
-    name: "フシギダネ",
-    weakness: "炎",
-    moves: [
-      { name: "たいあたり", power: 10, energy: 0, effect: "なし" },
-      { name: "つるのムチ", power: 30, energy: 2, effect: "なし" },
-      { name: "ソーラービーム", power: 80, energy: 4, effect: "1ターン溜めが必要" },
-      { name: "やどりぎのたね", power: 10, energy: 1, effect: "毎ターンHPを10回復" },
-      { name: "はっぱスライサー", power: 40, energy: 2, effect: "急所にあたりやすい" },
-      { name: "どくのこな", power: 0, energy: 1, effect: "相手を「どく」にする" }
-    ]
-  },
-  {
-    id: "mewtwo",
-    name: "ミュウツー",
+    id: "mew",
+    name: "ミュウ",
     weakness: "悪",
     moves: [
-      { name: "ねんりき", power: 20, energy: 1, effect: "なし" },
-      { name: "サイコキネシス", power: 60, energy: 3, effect: "相手のエネコロ数×10追加" },
-      { name: "スピードスター", power: 40, energy: 2, effect: "必ず命中する" },
-      { name: "じかいだん", power: 70, energy: 3, effect: "なし" },
-      { name: "バリアー", power: 0, energy: 1, effect: "次のダメージを30軽減" },
-      { name: "ドレインパンチ", power: 30, energy: 2, effect: "与えたダメージの半分回復" }
+      { name: "ねんりき", power: 20, energy: “超”, effect: "なし" },
+      { name: "サイコキネシス", power: 60, energy: “超”, effect: "相手のエネコロ数×10追加" },
+      { name: "スピードスター", power: 40, energy: “超”, effect: "必ず命中する" },
+      { name: "じかいだん", power: 70, energy: “超”, effect: "なし" },
+      { name: "バリアー", power: 0, energy: “超”, effect: "次のダメージを30軽減" },
+      { name: "ドレインパンチ", power: 30, energy: “超”, effect: "与えたダメージの半分回復" }
     ]
   }
 ];

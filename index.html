@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>プラコロ HP・エネコロ管理</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 12px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #334155;
+    }
+    
+    /* ヘッダー・タイトル */
+    .app-header {
+      text-align: center;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #334155;
+      margin-bottom: 12px;
+    }
+    .app-title { font-size: 1.25rem; font-weight: bold; color: #38bdf8; }
+
+    /* 画面切り替え */
+    .screen { display: none; flex-direction: column; gap: 14px; }
+    .screen.active { display: flex; }
+
+    /* ポケモン基本情報 */
+    .poke-info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #334155;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+    .poke-name { color: #f1f5f9; }
+    .poke-weakness { color: #f87171; font-size: 0.95rem; }
+
+    /* HP & エネコロ パネル */
+    .status-panel {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status-label-val { display: flex; flex-direction: column; }
+    .status-label { font-size: 0.85rem; color: #94a3b8; font-weight: bold; }
+    .status-value { font-size: 1.8rem; font-weight: 800; }
+    .hp-val { color: #ef4444; }
+    .enekoro-val { color: #f59e0b; }
+
+    .btn-group { display: flex; gap: 8px; }
+    .btn-ctrl {
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: active 0.1s;
+    }
+    .btn-ctrl:active { transform: scale(0.95); }
+    .btn-inc { background: #22c55e; color: #ffffff; }
+    .btn-dec { background: #ef4444; color: #ffffff; }
+
+    /* 使うワザ 表示枠 */
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #94a3b8;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .active-move-card {
+      background: #1e1b4b;
+      border: 2px solid #6366f1;
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .active-move-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .move-title { font-size: 1.1rem; font-weight: bold; color: #a5b4fc; }
+    .move-cost { font-size: 0.85rem; background: #312e81; color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .move-details { display: flex; gap: 12px; font-size: 0.9rem; color: #e0e7ff; margin-bottom: 4px; }
+    .move-power { font-weight: bold; color: #f87171; }
+    .move-effect { font-size: 0.8rem; color: #c7d2fe; }
+    .no-move-selected { color: #64748b; text-align: center; font-size: 0.9rem; }
+
+    /* ワザ選択ボタン（2x2グリッド） */
+    .guide-arrow {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #38bdf8;
+      margin: 2px 0;
+      font-weight: bold;
+    }
+    .moves-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .move-btn-card {
+      background: #334155;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .move-btn-card:active { background: #475569; transform: scale(0.98); }
+    .move-btn-card.selected { border-color: #818cf8; background: #2e1065; }
+    .move-btn-name { font-size: 0.95rem; font-weight: bold; color: #f8fafc; margin-bottom: 4px; }
+    .move-btn-sub { display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; }
+
+    /* アクションボタン */
+    .bottom-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .btn-action {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-reset { background: #475569; color: #f1f5f9; }
+    .btn-setting { background: #0284c7; color: #ffffff; }
+
+    /* セッティング画面スタイル */
+    .select-box {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      background: #334155;
+      color: #ffffff;
+      border: 1px solid #475569;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+    .setting-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .setting-col {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 260px;
+    }
+    .setting-col-title {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #38bdf8;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 4px;
+      text-align: center;
+    }
+    .item-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .item-card:hover { border-color: #38bdf8; }
+    .item-title { font-weight: bold; color: #f1f5f9; }
+    .item-desc { color: #94a3b8; font-size: 0.7rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="app-header">
+    <div class="app-title">プラコロ 体力・エネコロ管理</div>
+  </div>
+
+  <!-- 【メイン画面】 -->
+  <div id="mainScreen" class="screen active">
+    <!-- 使用ポケモン＆弱点 -->
+    <div class="poke-info-bar">
+      <div>使用ポケモン : <span id="mainPokeName" class="poke-name">ピカチュウ</span></div>
+      <div class="poke-weakness">弱点 : <span id="mainPokeWeak">地面</span></div>
+    </div>
+
+    <!-- HP管理 -->
+    <div class="status-panel">
+      <div class="status-label-val">
+        <span class="status-label">HP (体力)</span>
+        <span id="hpDisplay" class="status-value hp-val">120</span>
+      </div>
+      <div class="btn-group">
+        <button class="btn-ctrl btn-inc" onclick="changeHP(10)">△ +10</button>
+        <button class="btn-ctrl btn-dec" onclick="changeHP(-10)">▽ -10</button>
+      </div>
+    </div>
+
+    <!-- エネコロ管理 -->
+    <div class="status-panel">
+      <div class="status-label-val">
+        <span class="status-label">次のエネコロ</span>
+        <span id="enekoroDisplay" class="status-value enekoro-val">3コ</span>
+      </div>
+      <div class="btn-group">
+        <button class="btn-ctrl btn-inc" onclick="changeEnekoro(1)">△ +1</button>
+        <button class="btn-ctrl btn-dec" onclick="changeEnekoro(-1)">▽ -1</button>
+      </div>
+    </div>
+
+    <!-- 使うワザ表示枠 -->
+    <div>
+      <div class="section-title">使うワザ</div>
+      <div id="activeMoveBox" class="active-move-card">
+        <div class="no-move-selected">下のワザカードをタップするとここに表示されます</div>
+      </div>
+    </div>
+
+    <div class="guide-arrow">▲ タップすると上の枠へワザカードが移動 ▲</div>
+
+    <!-- ワザ（4つ） -->
+    <div>
+      <div class="section-title">ワザ</div>
+      <div id="movesGrid" class="moves-grid">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+
+    <!-- 操作ボタン -->
+    <div class="bottom-actions">
+      <button class="btn-action btn-reset" onclick="resetStatus()">リセット</button>
+      <button class="btn-action btn-setting" onclick="showScreen('settingScreen')">セッティング</button>
+    </div>
+  </div>
+
+  <!-- 【セッティング画面】 -->
+  <div id="settingScreen" class="screen">
+    <div>
+      <label class="section-title">使用ポケモンを選択する</label>
+      <select id="pokemonSelect" class="select-box" onchange="onPokemonSelectChange()">
+        <!-- JSで動的生成 -->
+      </select>
+    </div>
+
+    <div>
+      <div class="section-title">使用ワザを選択する（4つ選択）</div>
+      <div class="setting-columns">
+        <!-- 左: 使えるワザ一覧 -->
+        <div class="setting-col">
+          <div id="availableTitle" class="setting-col-title">使えるワザ</div>
+          <div id="availableMovesList" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+        <!-- 右: 使うワザ（選択済み） -->
+        <div class="setting-col">
+          <div class="setting-col-title">使うワザ (4つ必須)</div>
+          <div id="selectedMovesList" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-actions" style="margin-top:auto;">
+      <button class="btn-action btn-setting" style="width:100%;" onclick="applySettingsAndReturn()">メイン画面へ反映して戻る</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// データベース
+const database = [
+  {
+    id: "pikachu",
+    name: "ピカチュウ",
+    weakness: "地面",
+    moves: [
+      { name: "でんげき", power: 20, energy: 1, effect: "なし" },
+      { name: "10まんボルト", power: 50, energy: 3, effect: "相手を「まひ」にする" },
+      { name: "アイアンテール", power: 40, energy: 2, effect: "コインが表なら+20" },
+      { name: "でんこうせっか", power: 10, energy: 0, effect: "必ず先制できる" },
+      { name: "ボルテッカー", power: 80, energy: 4, effect: "自分にも20ダメージ" },
+      { name: "スパーク", power: 30, energy: 2, effect: "控えポケモンに10ダメージ" }
+    ]
+  },
+  {
+    id: "charizard",
+    name: "リザードン",
+    weakness: "水",
+    moves: [
+      { name: "ひのこ", power: 20, energy: 1, effect: "なし" },
+      { name: "かえんほうしゃ", power: 60, energy: 3, effect: "相手を「やけど」にする" },
+      { name: "ほのおのパンチ", power: 40, energy: 2, effect: "なし" },
+      { name: "きりさく", power: 30, energy: 2, effect: "急所にあたりやすい" },
+      { name: "フレアドライブ", power: 90, energy: 4, effect: "自分にも30ダメージ" },
+      { name: "りゅうのいかり", power: 40, energy: 2, effect: "固定40ダメージ" }
+    ]
+  },
+  {
+    id: "blastoise",
+    name: "カメックス",
+    weakness: "雷",
+    moves: [
+      { name: "みずでっぽう", power: 20, energy: 1, effect: "なし" },
+      { name: "ハイドロポンプ", power: 70, energy: 4, effect: "なし" },
+      { name: "ロケットずつき", power: 50, energy: 3, effect: "次のターン防御+20" },
+      { name: "みずの波動", power: 30, energy: 2, effect: "相手を「こんらん」にする" },
+      { name: "たきのぼり", power: 40, energy: 2, effect: "なし" },
+      { name: "かみつく", power: 20, energy: 1, effect: "コイン表なら相手ひるみ" }
+    ]
+  },
+  {
+    id: "bulbasaur",
+    name: "フシギダネ",
+    weakness: "炎",
+    moves: [
+      { name: "たいあたり", power: 10, energy: 0, effect: "なし" },
+      { name: "つるのムチ", power: 30, energy: 2, effect: "なし" },
+      { name: "ソーラービーム", power: 80, energy: 4, effect: "1ターン溜めが必要" },
+      { name: "やどりぎのたね", power: 10, energy: 1, effect: "毎ターンHPを10回復" },
+      { name: "はっぱスライサー", power: 40, energy: 2, effect: "急所にあたりやすい" },
+      { name: "どくのこな", power: 0, energy: 1, effect: "相手を「どく」にする" }
+    ]
+  },
+  {
+    id: "mewtwo",
+    name: "ミュウツー",
+    weakness: "悪",
+    moves: [
+      { name: "ねんりき", power: 20, energy: 1, effect: "なし" },
+      { name: "サイコキネシス", power: 60, energy: 3, effect: "相手のエネコロ数×10追加" },
+      { name: "スピードスター", power: 40, energy: 2, effect: "必ず命中する" },
+      { name: "じかいだん", power: 70, energy: 3, effect: "なし" },
+      { name: "バリアー", power: 0, energy: 1, effect: "次のダメージを30軽減" },
+      { name: "ドレインパンチ", power: 30, energy: 2, effect: "与えたダメージの半分回復" }
+    ]
+  }
+];
+
+// アプリ状態
+let currentHp = 120;
+let currentEnekoro = 3;
+let selectedPokemon = database[0];
+let selectedMoves = database[0].moves.slice(0, 4); // 初期は最初の4ワザ
+let activeMove = null;
+
+// セッティング画面の一時保持用
+let tempPokemon = selectedPokemon;
+let tempSelectedMoves = [...selectedMoves];
+
+// 初期化
+window.addEventListener('DOMContentLoaded', () => {
+  renderMainScreen();
+  initSettingScreen();
+  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(console.error);
+  }
+});
+
+// 画面切り替え
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  if (screenId === 'settingScreen') {
+    tempPokemon = selectedPokemon;
+    tempSelectedMoves = [...selectedMoves];
+    document.getElementById('pokemonSelect').value = tempPokemon.id;
+    renderSettingLists();
+  }
+}
+
+// HP変更 (120~0)
+function changeHP(amount) {
+  currentHp = Math.min(120, Math.max(0, currentHp + amount));
+  document.getElementById('hpDisplay').innerText = currentHp;
+}
+
+// エネコロ変更 (0以上)
+function changeEnekoro(amount) {
+  currentEnekoro = Math.max(0, currentEnekoro + amount);
+  document.getElementById('enekoroDisplay').innerText = currentEnekoro + 'コ';
+}
+
+// リセット
+function resetStatus() {
+  currentHp = 120;
+  currentEnekoro = 3;
+  activeMove = null;
+  document.getElementById('hpDisplay').innerText = currentHp;
+  document.getElementById('enekoroDisplay').innerText = currentEnekoro + 'コ';
+  renderActiveMove();
+}
+
+// 使うワザカードを選択
+function selectActiveMove(move) {
+  activeMove = move;
+  renderActiveMove();
+  renderMainMovesGrid();
+}
+
+// 使うワザ描画
+function renderActiveMove() {
+  const box = document.getElementById('activeMoveBox');
+  if (!activeMove) {
+    box.innerHTML = `<div class="no-move-selected">下のワザカードをタップするとここに表示されます</div>`;
+    return;
+  }
+  box.innerHTML = `
+    <div class="active-move-header">
+      <span class="move-title">${activeMove.name}</span>
+      <span class="move-cost">必要エネ: ${activeMove.energy}</span>
+    </div>
+    <div class="move-details">
+      <span>威力: <span class="move-power">${activeMove.power}</span></span>
+    </div>
+    <div class="move-effect">効果: ${activeMove.effect}</div>
+  `;
+}
+
+// メイン画面描画
+function renderMainScreen() {
+  document.getElementById('mainPokeName').innerText = selectedPokemon.name;
+  document.getElementById('mainPokeWeak').innerText = selectedPokemon.weakness;
+  renderMainMovesGrid();
+  renderActiveMove();
+}
+
+function renderMainMovesGrid() {
+  const grid = document.getElementById('movesGrid');
+  grid.innerHTML = '';
+  selectedMoves.forEach(move => {
+    const isSelected = activeMove && activeMove.name === move.name;
+    const card = document.createElement('div');
+    card.className = `move-btn-card ${isSelected ? 'selected' : ''}`;
+    card.onclick = () => selectActiveMove(move);
+    card.innerHTML = `
+      <div class="move-btn-name">${move.name}</div>
+      <div class="move-btn-sub">
+        <span>威力: ${move.power}</span>
+        <span>エネ: ${move.energy}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// セッティング画面初期化
+function initSettingScreen() {
+  const select = document.getElementById('pokemonSelect');
+  select.innerHTML = '';
+  database.forEach(poke => {
+    const opt = document.createElement('option');
+    opt.value = poke.id;
+    opt.textContent = `${poke.name} (弱点: ${poke.weakness})`;
+    select.appendChild(opt);
+  });
+}
+
+function onPokemonSelectChange() {
+  const id = document.getElementById('pokemonSelect').value;
+  tempPokemon = database.find(p => p.id === id);
+  tempSelectedMoves = tempPokemon.moves.slice(0, 4); // デフォルト4つ
+  renderSettingLists();
+}
+
+function renderSettingLists() {
+  document.getElementById('availableTitle').innerText = `${tempPokemon.name}のワザ`;
+  
+  const availList = document.getElementById('availableMovesList');
+  const selList = document.getElementById('selectedMovesList');
+  availList.innerHTML = '';
+  selList.innerHTML = '';
+
+  // 使えるワザ一覧
+  tempPokemon.moves.forEach(move => {
+    const isAlreadySelected = tempSelectedMoves.some(m => m.name === move.name);
+    const item = document.createElement('div');
+    item.className = 'item-card';
+    if (isAlreadySelected) item.style.opacity = '0.5';
+    item.innerHTML = `
+      <div class="item-title">${move.name}</div>
+      <div class="item-desc">威:${move.power} エネ:${move.energy}</div>
+    `;
+    item.onclick = () => {
+      if (!isAlreadySelected && tempSelectedMoves.length < 4) {
+        tempSelectedMoves.push(move);
+        renderSettingLists();
+      }
+    };
+    availList.appendChild(item);
+  });
+
+  // 選択済みワザ（4つ）
+  tempSelectedMoves.forEach((move, idx) => {
+    const item = document.createElement('div');
+    item.className = 'item-card';
+    item.style.borderColor = '#818cf8';
+    item.innerHTML = `
+      <div class="item-title" style="color:#a5b4fc;">${move.name} ✕</div>
+      <div class="item-desc">威:${move.power} エネ:${move.energy}</div>
+    `;
+    item.onclick = () => {
+      tempSelectedMoves.splice(idx, 1);
+      renderSettingLists();
+    };
+    selList.appendChild(item);
+  });
+}
+
+// セッティング反映してメイン画面へ
+function applySettingsAndReturn() {
+  if (tempSelectedMoves.length !== 4) {
+    alert('ワザは必ず4つ選択してください。（現在 ' + tempSelectedMoves.length + ' 個選択されています）');
+    return;
+  }
+  selectedPokemon = tempPokemon;
+  selectedMoves = [...tempSelectedMoves];
+  activeMove = null;
+  renderMainScreen();
+  showScreen('mainScreen');
+}
+</script>
+
+</body>
+</html>

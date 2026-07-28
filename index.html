@@ -328,16 +328,15 @@
     <section class="legend-container">
       <div class="legend-title">キャラコロ姿勢</div>
       <ul class="legend-grid">
-        <li class="legend-item"><span class="legend-number">①</span>"直立"</li>
-        <li class="legend-item"><span class="legend-number">②</span>"仰向け"</li>
-        <li class="legend-item"><span class="legend-number">③</span>"右倒れ"</li>
-        <li class="legend-item"><span class="legend-number">④</span>"左倒れ"</li>
-        <li class="legend-item"><span class="legend-number">⑤</span>"うつ伏せ"</li>
-        <li class="legend-item"><span class="legend-number">⑥</span>"逆立ち"</li>
+        <li class="legend-item"><span class="legend-number">①</span>直立</li>
+        <li class="legend-item"><span class="legend-number">②</span>仰向け</li>
+        <li class="legend-item"><span class="legend-number">③</span>右倒れ</li>
+        <li class="legend-item"><span class="legend-number">④</span>左倒れ</li>
+        <li class="legend-item"><span class="legend-number">⑤</span>うつ伏せ</li>
+        <li class="legend-item"><span class="legend-number">⑥</span>逆立ち</li>
       </ul>
     </section>
 
-    
     <!-- 操作ボタン -->
     <div class="bottom-actions">
       <button class="btn-action btn-reset" onclick="resetStatus()">リセット</button>
@@ -377,7 +376,7 @@
 </div>
 
 <script>
-// データベース
+// データベース（クォーテーションをすべて半角修正）
 const database = [
   {
     id: "pikachu",
@@ -398,12 +397,12 @@ const database = [
     name: "ミュウ",
     weakness: "悪",
     moves: [
-      { name: "ねんりき", power: 20, energy: “超”, effect: "なし" },
-      { name: "サイコキネシス", power: 60, energy: “超”, effect: "相手のエネコロ数×10追加" },
-      { name: "スピードスター", power: 40, energy: “超”, effect: "必ず命中する" },
-      { name: "じかいだん", power: 70, energy: “超”, effect: "なし" },
-      { name: "バリアー", power: 0, energy: “超”, effect: "次のダメージを30軽減" },
-      { name: "ドレインパンチ", power: 30, energy: “超”, effect: "与えたダメージの半分回復" }
+      { name: "ねんりき", power: 20, energy: "超", effect: "なし" },
+      { name: "サイコキネシス", power: 60, energy: "超", effect: "相手のエネコロ数×10追加" },
+      { name: "スピードスター", power: 40, energy: "超", effect: "必ず命中する" },
+      { name: "じかいだん", power: 70, energy: "超", effect: "なし" },
+      { name: "バリアー", power: 0, energy: "超", effect: "次のダメージを30軽減" },
+      { name: "ドレインパンチ", power: 30, energy: "超", effect: "与えたダメージの半分回復" }
     ]
   }
 ];
@@ -485,7 +484,7 @@ function renderActiveMove() {
     <div class="move-details">
       <span>威力: <span class="move-power">${activeMove.power}</span></span>
     </div>
-    <div class="move-effect">効果: ${activeMove.effect}</div>
+    <div class="move-effect">効果: ${activeMove.effect.replace(/\n/g, '<br>')}</div>
   `;
 }
 

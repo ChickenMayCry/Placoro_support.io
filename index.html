@@ -322,12 +322,13 @@ const database = [
     name: "ピカチュウ",
     weakness: "地面",
     moves: [
-      { name: "でんげき", power: 20, energy: 1, effect: "なし" },
-      { name: "10まんボルト", power: 50, energy: 3, effect: "相手を「まひ」にする" },
-      { name: "アイアンテール", power: 40, energy: 2, effect: "コインが表なら+20" },
-      { name: "でんこうせっか", power: 10, energy: 0, effect: "必ず先制できる" },
-      { name: "ボルテッカー", power: 80, energy: 4, effect: "自分にも20ダメージ" },
-      { name: "スパーク", power: 30, energy: 2, effect: "控えポケモンに10ダメージ" }
+      { name: "かじる", power: 10, energy: 電, effect: "30ダメージ追加。" },
+      { name: "でんきショック", power: 10, energy: 電電, effect: "20ダメージ追加。" },
+      { name: "エレキラッシュ", power: 20, energy: 電電, effect: "このワザは弱点を計算しない。\nもう一回「エレキラッシュ」使う。（失敗するまで繰り返せる。）" },
+      { name: "10まんボルト", power: 30, energy: 電電電, effect: "30ダメージ追加。\n次の自分の番、自分のエネコロを2個少なくする。" },
+      { name: "かみなり", power: 20, energy: 電電電, effect: "60ダメージ追加。" },
+      { name: "ボルテッカー", power: 40, energy: 電電電電, effect: "このポケモンにも30ダメージ。\n40ダメージ追加。" },
+      { name: "アイアンテール", power: 20, energy: 鋼, effect: "次の相手の番、このポケモンが受けるダメージを-10する。" }
     ]
   },
   {

@@ -405,12 +405,13 @@ const database = [
     name: "ミュウ",
     weakness: "悪",
     moves: [
-      { name: "ねんりき", power: 20, energy: "超", effect: "なし" },
-      { name: "サイコキネシス", power: 60, energy: "超", effect: "相手のエネコロ数×10追加" },
-      { name: "スピードスター", power: 40, energy: "超", effect: "必ず命中する" },
-      { name: "じかいだん", power: 70, energy: "超", effect: "なし" },
-      { name: "バリアー", power: 0, energy: "超", effect: "次のダメージを30軽減" },
-      { name: "ドレインパンチ", power: 30, energy: "超", effect: "与えたダメージの半分回復" }
+      { name: "ねんりき", power: 10, energy: "超", effect: "①③④20ダメージ追加。" },
+      { name: "サイケこうせん", power: 20, energy: "超超", effect: "①⑥30ダメージ追加。" },
+      { name: "バリアー", power: 0, energy: "超超", effect: "次の相手の番、このポケモンが受けるダメージを-20する。\n①②受けるダメージをさらに-30する。" },
+      { name: "メモリースキップ", power: 2, energy: "超超", effect: "①③④相手のワザを1つ選ぶ。次の相手の番、そのワザは使えない。" },
+      { name: "サイコショット", power: 30, energy: "超超超", effect: "①②⑤⑥20ダメージ追加。" },
+      { name: "サイコキネシス", power: 20, energy: "超超超", effect: "①②⑤相手はエネコロを3個振る。一番多く出たタイプのエネルギーの数×10ダメージ追加。" },
+      { name: "リフレクション", power: 0, energy: "超超超超", effect: "相手が最後に選んだワザに書かれているダメージを相手に与える。(選んだワザのキャラコロの効果は無視する。)\n①③④このワザで与えるダメージは2倍になる。" }
     ]
   }
 ];

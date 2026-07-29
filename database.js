@@ -1,7 +1,7 @@
 // database.js
 const database = [
     {
-      id: "pikachu",
+      id: "Pikachu",
       name: "ピカチュウ",
       weakness: "闘",
       moves: [
@@ -15,7 +15,7 @@ const database = [
       ]
     },
     {
-      id: "mew",
+      id: "Mew",
       name: "ミュウ",
       weakness: "悪",
       moves: [
@@ -29,7 +29,7 @@ const database = [
       ]
     },
     {
-      id: "fushigidane",
+      id: "Bulbsaur",
       name: "フシギダネ",
       weakness: "炎",
       moves: [
@@ -43,7 +43,7 @@ const database = [
       ]
     },
     {
-      id: "hitokage",
+      id: "Charmander",
       name: "ヒトカゲ",
       weakness: "水",
       moves: [
@@ -57,7 +57,7 @@ const database = [
       ]
     },
     {
-      id: "zenigame",
+      id: "Squirtle",
       name: "ゼニガメ",
       weakness: "電",
       moves: [
@@ -71,7 +71,7 @@ const database = [
       ]
     },
     {
-      id: "eievui",
+      id: "Eevee",
       name: "イーブイ",
       weakness: "闘",
       moves: [
@@ -85,7 +85,7 @@ const database = [
       ]
     },
     {
-      id: "betobeta",
+      id: "Grimer",
       name: "ベトベター",
       weakness: "闘",
       moves: [
@@ -101,7 +101,7 @@ const database = [
       ]
     },
     {
-      id: "iwaku",
+      id: "Onix",
       name: "イワーク",
       weakness: "草",
       moves: [
@@ -118,7 +118,7 @@ const database = [
       ]
     },
     {
-      id: "kairosu",
+      id: "Pinsir",
       name: "カイロス",
       weakness: "飛",
       moves: [

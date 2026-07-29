@@ -133,5 +133,22 @@ const database = [
         { name: "かわらわり", power: 20, energy: "闘", effect: "①②20ダメージ追加。" },
         { name: "じごくぐるま", power: 30, energy: "闘無無無", effect: "①②⑤⑥30ダメージ追加。" }
       ]
+    },
+    {
+      id: "Moltres",
+      name: "ファイヤー",
+      weakness: "水",
+      moves: [
+        { name: "ほのおのうず", power: 20, energy: "炎炎", effect: "①②40ダメージ追加\n③④⑤⑥次の自分の番、自分のエネコロを2個少なくする。" },
+        { name: "ほのおのつばさ", power: 30, energy: "炎炎", effect: "①②30ダメージ追加。\n③④このポケモンにも20ダメージ。" },
+        { name: "ヒートブレス", power: 40, energy: "炎炎炎", effect: "①②40ダメージ追加。\n⑤⑥このポケモンにも30ダメージ。" },
+        { name: "ねっぷう", power: 30, energy: "炎炎炎", effect: "①③④20ダメージ追加。" },
+        { name: "かえんほうしゃ", power: 40, energy: "炎炎炎炎", effect: "①②40ダメージ追加\n③④⑤⑥次の自分の番、自分のエネコロを2個少なくする。" },
+        { name: "もえつきる", power: 80, energy: "炎炎炎炎", effect: "②⑤⑥このワザは失敗する。" },
+        { name: "フレアドライブ", power: 50, energy: "炎炎炎炎炎", effect: "①②⑤40ダメージ追加。\n③④⑥このポケモンにも40ダメージ。" },
+        { name: "ウイングラッシュ", power: 20, energy: "飛", effect: "①②③④10ダメージ追加。" },
+        { name: "そらをとぶ", power: 30, energy: "飛無無", effect: "①③④次の相手の番、このポケモンはワザのダメージを受けない。\n②⑤⑥このワザは失敗する。" },
+        { name: "ぼうふう", power: 20, energy: "飛無無無", effect: "①60ダメージ追加。" }
+      ]
     }
   ];

@@ -116,5 +116,22 @@ const database = [
         { name: "ジャイロボール", power: 20, energy: "鋼無無", effect: "①②③④相手もキャラコロを振って、⑤⑥が出たなら、60ダメージ追加。" },
         { name: "アイアンテール", power: 20, energy: "鋼無無", effect: "①③④次の相手の番、このポケモンが受けるダメージを-10する。" }
       ]
+    },
+    {
+      id: "kairosu",
+      name: "カイロス",
+      weakness: "飛",
+      moves: [
+        { name: "しゅうちゅう", power: 10, energy: "草", effect: "①③④次の自分の番、自分のエネコロを2個多くする。" },
+        { name: "チャージばさみ", power: 20, energy: "草草", effect: "①②次の自分の番、自分のエネコロを1個多くする。" },
+        { name: "たえる", power: 0, energy: "草草", effect: "次の相手の番、このポケモンが受けるダメージを-20する。\n①②⑤受けるダメージをさらに-20する。" },
+        { name: "とつげき", power: 30, energy: "草草草", effect: "①②20ダメージ追加。\n⑤⑥このポケモンにも20ダメージ。" },
+        { name: "つのでたたく", power: 20, energy: "草草草", effect: "①③④30ダメージ追加。" },
+        { name: "ぎゃくじょうスイング", power: 10, energy: "草草草", effect: "①③④前の自分の番、自分のワザのエネコロが失敗していたなら、40ダメージ追加。" },
+        { name: "ひっさつばさみ", power: 20, energy: "草草草草", effect: "①80ダメージ追加。" },
+        { name: "ハサミギロチン", power: 0, energy: "草草草草草", effect: "①150ダメージ与える。" },
+        { name: "かわらわり", power: 20, energy: "闘", effect: "①②20ダメージ追加。" },
+        { name: "じごくぐるま", power: 30, energy: "闘無無無", effect: "①②⑤⑥30ダメージ追加。" }
+      ]
     }
   ];

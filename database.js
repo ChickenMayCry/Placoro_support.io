@@ -173,16 +173,16 @@ const database = [
       name: "フリーザー",
       weakness: "鋼",
       moves: [
-        { name: "フリーズダイブ", power: 20, energy: "水", effect: "①②20ダメージ追加。" },
-        { name: "アイスショット", power: 30, energy: "水水", effect: "①③④20ダメージ追加。" },
-        { name: "アイスウイング", power: 40, energy: "水水", effect: "①②③④次の相手の番、相手のエネコロを1個少なくする。" },
-        { name: "コールドブレス", power: 30, energy: "水水水", effect: "①③④次の相手の番、相手のエネコロを2個少なくする。" },
-        { name: "いてつくやいば", power: 40, energy: "水水水", effect: "①③④次の相手の番、相手はキャラコロを振れない。" },
-        { name: "ブリザードストーム", power: 80, energy: "水水水水", effect: "①②③④30ダメージ追加。" },
-        { name: "ぜったいれいど", power: 50, energy: "水水水水", effect: "①②次の相手の番、相手のエネコロを2個少なくする。さらにキャラコロを振れない。" },
-        { name: "はねやすめ", power: 20, energy: "飛飛", effect: "このポケモンのHPを20回復する。\n①③④さらに20回復する。" },
+        { name: "フリーズダイブ", power: 10, energy: "水", effect: "①②20ダメージ追加。" },
+        { name: "アイスショット", power: 20, energy: "水水", effect: "①③④20ダメージ追加。" },
+        { name: "アイスウイング", power: 10, energy: "水水", effect: "①②③④次の相手の番、相手のエネコロを1個少なくする。" },
+        { name: "コールドブレス", power: 20, energy: "水水水", effect: "①③④次の相手の番、相手のエネコロを2個少なくする。" },
+        { name: "いてつくやいば", power: 30, energy: "水水水", effect: "①③④次の相手の番、相手はキャラコロを振れない。" },
+        { name: "ブリザードストーム", power: 30, energy: "水水水水", effect: "①②③④30ダメージ追加。" },
+        { name: "ぜったいれいど", power: 40, energy: "水水水水", effect: "①②次の相手の番、相手のエネコロを2個少なくする。さらにキャラコロを振れない。" },
+        { name: "はねやすめ", power: 0, energy: "飛飛", effect: "このポケモンのHPを20回復する。\n①③④さらに20回復する。" },
         { name: "そらをとぶ", power: 30, energy: "飛無無", effect: "①③④次の相手の番、このポケモンはワザのダメージを受けない。\n②⑤⑥このワザは失敗する。" },
-        { name: "エアカッター", power: 20, energy: "飛無無無", effect: "①②30ダメージ追加。" }
+        { name: "エアカッター", power: 40, energy: "飛無無無", effect: "①②30ダメージ追加。" }
       ]
     }
   ];

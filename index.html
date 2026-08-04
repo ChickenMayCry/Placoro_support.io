@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>プラコロ 対戦サポートツール</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e293b">
+  <meta name="theme-color" content="#ffffff">
   <link rel="apple-touch-icon" href="icon-192.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #0f172a;
-      color: #f8fafc;
+      background-color: #f1f5f9;
+      color: #0f172a;
       display: flex;
       justify-content: center;
       min-height: 100vh;
@@ -21,19 +21,19 @@
     .container {
       width: 100%;
       max-width: 480px;
-      background: #1e293b;
+      background: #ffffff;
       border-radius: 16px;
       padding: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
-      border: 1px solid #334155;
+      border: 1px solid #e2e8f0;
     }
 
-    /* --- 凡例スタイル（表示不具合対策・強化版） --- */
+    /* --- 凡例スタイル --- */
     .legend-container {
-      background-color: #0f172a;
-      border: 1px solid #334155;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 12px;
       margin: 12px 0;
@@ -42,27 +42,27 @@
       font-size: 0.9rem;
       font-weight: bold;
       margin-bottom: 8px;
-      color: #38bdf8;
+      color: #0284c7;
       border-bottom: 2px solid #0284c7;
       padding-bottom: 4px;
       display: inline-block;
     }
     .legend-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3列固定で安定化 */
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
       list-style: none;
       padding: 0;
       margin: 0;
     }
     .legend-item {
-      background: #334155;
+      background: #ffffff;
       padding: 6px 8px;
       border-radius: 6px;
-      border: 1px solid #475569;
+      border: 1px solid #cbd5e1;
       font-size: 0.85rem;
       font-weight: bold;
-      color: #ffffff !important; /* 強制的に白文字に設定 */
+      color: #334155 !important;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -82,7 +82,7 @@
       flex-shrink: 0;
     }
     .legend-text {
-      color: #ffffff !important;
+      color: #334155 !important;
       white-space: nowrap;
     }
     /* ------------------------------------------- */
@@ -91,10 +91,10 @@
     .app-header {
       text-align: center;
       padding-bottom: 12px;
-      border-bottom: 2px solid #334155;
+      border-bottom: 2px solid #e2e8f0;
       margin-bottom: 12px;
     }
-    .app-title { font-size: 1.25rem; font-weight: bold; color: #38bdf8; }
+    .app-title { font-size: 1.25rem; font-weight: bold; color: #0284c7; }
 
     /* 画面切り替え */
     .screen { display: none; flex-direction: column; gap: 14px; }
@@ -105,19 +105,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #334155;
+      background: #f8fafc;
       padding: 10px 14px;
       border-radius: 10px;
+      border: 1px solid #e2e8f0;
       font-weight: bold;
       font-size: 1.05rem;
     }
-    .poke-name { color: #f1f5f9; }
-    .poke-weakness { color: #f87171; font-size: 0.95rem; }
+    .poke-name { color: #0f172a; }
+    .poke-weakness { color: #000000; font-size: 0.95rem; }
 
     /* HP & エネコロ パネル */
     .status-panel {
-      background: #0f172a;
-      border: 1px solid #334155;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 12px 14px;
       display: flex;
@@ -125,10 +126,10 @@
       align-items: center;
     }
     .status-label-val { display: flex; flex-direction: column; }
-    .status-label { font-size: 0.85rem; color: #94a3b8; font-weight: bold; }
+    .status-label { font-size: 0.85rem; color: #64748b; font-weight: bold; }
     .status-value { font-size: 1.8rem; font-weight: 800; }
-    .hp-val { color: #ef4444; }
-    .enekoro-val { color: #f59e0b; }
+    .hp-val { color: #ff3333; }
+    .enekoro-val { color: #d97706; }
 
     .btn-group { display: flex; gap: 8px; }
     .btn-ctrl {
@@ -141,26 +142,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      transition: active 0.1s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.1s;
     }
     .btn-ctrl:active { transform: scale(0.95); }
-    .btn-inc { background: #22c55e; color: #ffffff; }
-    .btn-dec { background: #ef4444; color: #ffffff; }
+    .btn-inc { background: #16a34a; color: #ffffff; }
+    .btn-dec { background: #ff3333; color: #ffffff; }
 
     /* 使うワザ 表示枠 */
     .section-title {
       font-size: 0.9rem;
       font-weight: bold;
-      color: #94a3b8;
+      color: #64748b;
       margin-bottom: 4px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
     .active-move-card {
-      background: #1e1b4b;
       border: 2px solid #6366f1;
+      background-color: #eef2ff;
       border-radius: 12px;
       padding: 12px;
       min-height: 80px;
@@ -174,18 +175,18 @@
       align-items: center;
       margin-bottom: 6px;
     }
-    .move-title { font-size: 1.1rem; font-weight: bold; color: #a5b4fc; }
-    .move-cost { font-size: 0.85rem; background: #312e81; color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
-    .move-details { display: flex; gap: 12px; font-size: 0.9rem; color: #e0e7ff; margin-bottom: 4px; }
-    .move-power { font-weight: bold; color: #f87171; }
-    .move-effect { font-size: 0.8rem; color: #c7d2fe; }
+    .move-title { font-size: 1.1rem; font-weight: bold; color: #4338ca; }
+    .move-cost { font-size: 0.85rem; background: #4884ed; color: #f5fb16; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
+    .move-details { display: flex; gap: 12px; font-size: 0.9rem; color: #312e81; margin-bottom: 4px; }
+    .move-power { font-weight: bold; color: #ff3333; }
+    .move-effect { font-size: 0.8rem; color: #3730a3; }
     .no-move-selected { color: #64748b; text-align: center; font-size: 0.9rem; }
 
     /* ワザ選択ボタン（2x2グリッド） */
     .guide-arrow {
       text-align: center;
       font-size: 0.8rem;
-      color: #38bdf8;
+      color: #0284c7;
       margin: 2px 0;
       font-weight: bold;
     }
@@ -195,18 +196,19 @@
       gap: 8px;
     }
     .move-btn-card {
-      background: #334155;
-      border: 1px solid #475569;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 10px;
       padding: 10px;
       text-align: left;
       cursor: pointer;
       transition: all 0.15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-    .move-btn-card:active { background: #475569; transform: scale(0.98); }
-    .move-btn-card.selected { border-color: #818cf8; background: #2e1065; }
-    .move-btn-name { font-size: 0.95rem; font-weight: bold; color: #f8fafc; margin-bottom: 4px; }
-    .move-btn-sub { display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; }
+    .move-btn-card:active { background: #f1f5f9; transform: scale(0.98); }
+    .move-btn-card.selected { border-color: #6366f1; background: #eef2ff; }
+    .move-btn-name { font-size: 0.95rem; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
+    .move-btn-sub { display: flex; justify-content: space-between; font-size: 0.75rem; color: #64748b; }
 
     /* アクションボタン */
     .bottom-actions {
@@ -223,8 +225,9 @@
       font-size: 0.95rem;
       cursor: pointer;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     }
-    .btn-reset { background: #475569; color: #f1f5f9; }
+    .btn-reset { background: #64748b; color: #ffffff; }
     .btn-setting { background: #0284c7; color: #ffffff; }
 
     /* セッティング画面スタイル */
@@ -232,9 +235,9 @@
       width: 100%;
       padding: 10px;
       border-radius: 8px;
-      background: #334155;
-      color: #ffffff;
-      border: 1px solid #475569;
+      background: #ffffff;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
       font-size: 1rem;
       font-weight: bold;
       margin-top: 4px;
@@ -246,8 +249,8 @@
       margin-top: 4px;
     }
     .setting-col {
-      background: #0f172a;
-      border: 1px solid #334155;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 8px;
       display: flex;
@@ -258,29 +261,29 @@
     .setting-col-title {
       font-size: 0.8rem;
       font-weight: bold;
-      color: #38bdf8;
-      border-bottom: 1px solid #334155;
+      color: #0284c7;
+      border-bottom: 1px solid #e2e8f0;
       padding-bottom: 4px;
       text-align: center;
     }
     .item-card {
-      background: #1e293b;
-      border: 1px solid #334155;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 6px;
       padding: 6px 8px;
       font-size: 0.8rem;
       cursor: pointer;
     }
-    .item-card:hover { border-color: #38bdf8; }
-    .item-title { font-weight: bold; color: #f1f5f9; }
-    .item-desc { color: #94a3b8; font-size: 0.7rem; }
+    .item-card:hover { border-color: #0284c7; }
+    .item-title { font-weight: bold; color: #0f172a; }
+    .item-desc { color: #64748b; font-size: 0.7rem; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <div class="app-header">
-    <div class="app-title">プラコロ 体力・エネコロ管理</div>
+    <div class="app-title">プラコロ 対戦サポートツール</div>
   </div>
 
   <!-- 【メイン画面】 -->
@@ -534,9 +537,9 @@ function renderSettingLists() {
   tempSelectedMoves.forEach((move, idx) => {
     const item = document.createElement('div');
     item.className = 'item-card';
-    item.style.borderColor = '#818cf8';
+    item.style.borderColor = '#6366f1';
     item.innerHTML = `
-      <div class="item-title" style="color:#a5b4fc;">${move.name} ✕</div>
+      <div class="item-title" style="color:#4338ca;">${move.name} ✕</div>
       <div class="item-desc">威:${move.power} エネ:${move.energy}</div>
     `;
     item.onclick = () => {
